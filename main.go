@@ -26,7 +26,7 @@ type Book struct {
 var client *mongo.Client
 
 func main() {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI("mongodb://192.168.20.2:27017")
 	client, _ = mongo.Connect(context.Background(), clientOptions)
 
 	router := mux.NewRouter()
@@ -70,7 +70,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var book Book
 
-	collection := client.Database("mydatabase").Collection("books")
+	collection := client.Database("bookstore").Collection("books")
 	err := collection.FindOne(context.Background(), bson.M{"_id": params["id"]}).Decode(&book)
 	if err != nil {
 		log.Fatal(err)
