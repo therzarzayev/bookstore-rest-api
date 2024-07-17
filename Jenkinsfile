@@ -33,10 +33,12 @@ pipeline {
 
         stage('Build Image'){
             steps{
-                dockerImage = docker.build("${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}")
+                script{
+                    dockerImage = docker.build("${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}")
+                }
             }
         }
-        
+
         stage("Push Image"){
             steps{
                 script{
