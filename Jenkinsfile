@@ -8,6 +8,12 @@ pipeline {
     tools {
         go 'go22.0'
     }
+        environment {
+        DOCKER_REGISTRY = 'registry.digitalocean.com'
+        REGISTRY_NAMESPACE = 'therzarzayev'
+        IMAGE_NAME = 'bookapi' 
+        DOCKER_CREDENTIALS_ID = 'digitalocean-api-token'
+    }
 
     stages {
         stage('Build') {
@@ -16,6 +22,29 @@ pipeline {
                 go mod tidy
                 go build main.go
                 '''
+            }
+            post{
+                success{
+                    echo "Now Archiving..."
+                    archiveArtifacts artifacts: 'main' 
+                }
+            }
+        }
+
+        stage('Build Image'){
+            steps{
+                dockerImage = docker.build("${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}")
+            }
+        }
+        
+        stage("Push Image"){
+            steps{
+                script{
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS_ID) {
+                        dockerImage.push("${env.BUILD_NUMBER}")
+                        dockerImage.push("latest")
+                    }
+                }
             }
         }
     }
