@@ -19,16 +19,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '''go mod init xling.online
-                go mod tidy
-                go build main.go
-                '''
+                sh "go build main.go"
             }
-            post{
-                success{
-                    archiveArtifacts artifacts: 'main' 
-                }
-            }
+            // post{
+            //     success{
+            //         archiveArtifacts artifacts: 'main' 
+            //     }
+            // }
         }
 
         stage('Build Image'){
