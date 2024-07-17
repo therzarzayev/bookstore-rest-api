@@ -30,28 +30,28 @@ pipeline {
                 }
             }
         }
-    }
 
-    stage('Build Image'){
-        agent{
-            label 'docker-node'
-        }
-        steps{
-            script{
-                dockerImage = docker.build("${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}")
+        stage('Build Image'){
+            agent{
+                label 'docker-node'
+            }
+            steps{
+                script{
+                    dockerImage = docker.build("${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}")
+                }
             }
         }
-    }
 
-    stage('Push Image'){
-        agent{
-            label 'docker-node'
-        }
-        steps{
-            script{
-                docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS_ID) {
-                    dockerImage.push("${env.BUILD_NUMBER}")
-                    dockerImage.push("latest")
+        stage('Push Image'){
+            agent{
+                label 'docker-node'
+            }
+            steps{
+                script{
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS_ID) {
+                        dockerImage.push("${env.BUILD_NUMBER}")
+                        dockerImage.push("latest")
+                    }
                 }
             }
         }
