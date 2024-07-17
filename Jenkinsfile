@@ -12,7 +12,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git branch: 'main', url: 'https://github.com/therzarzayev/bookstore-rest-api.git'
                 sh '''go mod init xling.online
                 go mod tidy
                 go build main.go
