@@ -1,33 +1,48 @@
 - name: Install and start mysql
   hosts: dbservers
   become: yes
+  vars:
+    dbname: accounts
+    username: therzarzayev
+    password: rza3639
+    lusocket: /run/mysqld/mysqld.sock
   tasks:
-#     - name: Update
-#       apt:
-#         update_cache: yes
+    # - name: Update
+    #   apt:
+    #     update_cache: yes
 
-#     - name: Upgrade
-#       apt:
-#         upgrade: dist
+    # - name: Upgrade
+    #   apt:
+    #     upgrade: dist
 
-#     - name: Install dependencies
-#       apt:
-#         name: python3-pymysql
-#         state: present
+    # - name: Install dependencies
+    #   apt:
+    #     name: python3-pymysql
+    #     state: present
     
-#     - name: Install Mysql Server
-#       apt:
-#         name: mysql-server
-#         state: present
+    # - name: Install Mysql Server
+    #   apt:
+    #     name: mysql-server
+    #     state: present
 
-#     - name: Start mysqld
-#       service:
-#         name: mysql
-#         enabled: yes
-#         state: started
+    # - name: Start mysqld
+    #   service:
+    #     name: mysql
+    #     enabled: yes
+    #     state: started
 
     - name: Create Database
       mysql_db:
-        name: accounts
+        name: "{{dbname}}"
         state: present
-        login_unix_socket: /run/mysqld/mysqld.sock
+        login_unix_socket: "{{lusocket}}"
+    
+    - name: Create User
+      mysql_user:
+        name: "{{username}}"
+        password: "{{password}}"
+        state: present
+        host: "%"
+        priv: '*.*:ALL,GRANT'
+        login_unix_socket: "{{lusocket}}"
+        column_case_sensitive: false
