@@ -1,0 +1,33 @@
+- name: Install and start mysql
+  hosts: dbservers
+  become: yes
+  tasks:
+#     - name: Update
+#       apt:
+#         update_cache: yes
+
+#     - name: Upgrade
+#       apt:
+#         upgrade: dist
+
+#     - name: Install dependencies
+#       apt:
+#         name: python3-pymysql
+#         state: present
+    
+#     - name: Install Mysql Server
+#       apt:
+#         name: mysql-server
+#         state: present
+
+#     - name: Start mysqld
+#       service:
+#         name: mysql
+#         enabled: yes
+#         state: started
+
+    - name: Create Database
+      mysql_db:
+        name: accounts
+        state: present
+        login_unix_socket: /run/mysqld/mysqld.sock

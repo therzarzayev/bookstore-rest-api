@@ -2,16 +2,10 @@ all:
     hosts:
         host01:
             ansible_host: host01.xling.online
-            ansible_user: devops
-            ansible_ssh_private_key_file: ~/.ssh/id_rsa
         host02:
             ansible_host: host02.xling.online
-            ansible_user: devops
-            ansible_ssh_private_key_file: ~/.ssh/id_rsa
         host03:
             ansible_host: host03.xling.online
-            ansible_user: devops
-            ansible_ssh_private_key_file: ~/.ssh/id_rsa
         
     children:
         webservers:
@@ -25,3 +19,6 @@ all:
             children:
                 webservers:
                 dbservers:
+            vars:
+                ansible_user: devops
+                ansible_ssh_private_key_file: ~/.ssh/id_rsa

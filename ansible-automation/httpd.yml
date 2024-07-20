@@ -1,0 +1,13 @@
+- name: Stop and delete
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: stop service
+      service:
+        name: httpd
+        state: stopped
+    - name: delete service
+      yum:
+        name: httpd
+        state: removed
+        autoremove: yes
