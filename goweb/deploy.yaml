@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goweb-dep
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: goweb
+  template:
+    metadata:
+      labels:
+        app: goweb
+    spec:
+      containers:
+      - name: goweb
+        image: therzarzayev/notepad:latest
+        ports:
+        - containerPort: 8000
+          name: goweb-port
