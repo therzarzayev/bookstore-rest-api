@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: goweb
-        image: therzarzayev/eksprestravel-az
+        image: therzarzayev/myserver
         ports:
         - containerPort: 8000
           name: goweb-port
