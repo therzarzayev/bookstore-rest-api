@@ -1,12 +1,9 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: goweb-svc
-spec:
-  type: NodePort
-  selector:
-    app: goweb
-  ports:
-  - port: 80
-    targetPort: 8000
-    nodePort: 31001
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - 172.17.8.101/24
+      gateway4: 172.17.8.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
