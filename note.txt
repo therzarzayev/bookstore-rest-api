@@ -1,2 +1,0 @@
--rwsrwx---  this is show that SUID is enable and file can be execute (x bit set)
--rwSrw-r--  this is show that SUID is enable but file can't be execute
